@@ -1,5 +1,15 @@
-#Levels must be all increasing or all decreasing
-#Difference between numbers must be between 1 and 3 inclusive.
+
+##########################
+# Part 1 Rules
+# 1. Levels must be all increasing or all decreasing
+# 2. Difference between numbers must be between 1 and 3 inclusive.
+##########################
+
+
+##########################
+# Part 2 Rules
+# 1. Problem Dampener exists - you can allow one unsafe condition.
+##########################
 
 import csv
 
@@ -7,9 +17,11 @@ d = {}
 
 def is_safe(l):
     i = 1
+    safety_counter = 0
     comparison_dict = {}
     while i <= len(l)-1:
         if abs(l[i]-l[i-1]) not in [1,2,3]:
+            safety_counter += 1
             return False
         if l[i] > l[i-1]:
             comparison_dict["greater"] = comparison_dict.get("greater",0) +1
