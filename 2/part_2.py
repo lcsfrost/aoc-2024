@@ -4,40 +4,32 @@
 # 1. Levels must be all increasing or all decreasing
 # 2. Difference between numbers must be between 1 and 3 inclusive.
 ##########################
-
-
-##########################
 # Part 2 Rules
 # 1. Problem Dampener exists - you can allow one unsafe condition.
 ##########################
 
 import csv
 
-d = {}
-
-def distance_check(a,b):
-    return (abs(a-b) in [1,2,3])
-
-
 def is_safe(row, loop_level = 0):
-    copied_row = row.copy()
+    copied_row = row.copy() #Copying row each loop to preserve original for recursion purposes
     if loop_level > len(row):
-        return False
-    if loop_level != 0:
+        return False #We've tested all iterations removing 1 element, and none passed.
+    
+    if loop_level != 0: #Don't need to remove anything for first iteration. 
         copied_row.pop(loop_level-1)
     i = 1
-    safety_counter = 0
+    safety_violation_counter = 0
     comparison_dict = {}
     while i <= len(copied_row)-1:
         if abs(copied_row[i]-copied_row[i-1]) not in [1,2,3]:
-            safety_counter += 1
+            safety_violation_counter += 1
         if copied_row[i] > copied_row[i-1]:
             comparison_dict["greater"] = comparison_dict.get("greater",0) +1
         else: 
             comparison_dict["lesser"] = comparison_dict.get("lesser",0) +1
         i +=1
 
-    if len(comparison_dict) == 1 and safety_counter == 0:
+    if len(comparison_dict) == 1 and safety_violation_counter == 0:
         return True
     else:
         loop_level +=1
